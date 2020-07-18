@@ -1,0 +1,39 @@
+
+#puplisher 
+import rospy
+from std_msgs.msg import String
+def lait_talk():
+    hello_pub=rospy.Publisher('hello',String,queue_size=10)
+    rospy.init_node('laith',anonymous=True)
+    rate =rospy.Rate(10)
+    while not rospy.is_shutdown():
+        greeting="hello listener"
+        rospy.loginfo(greeting)
+        hello_pub.publish(greeting)
+        rate.sleep()
+
+
+if __name__ == '__main__':
+    try:
+      lait_talk()
+    except rospy.ROSInterruptException:
+     pass
+-------------------------------
+#subscriber
+import rospy
+from std_msgs.msg import String
+
+def callback_str(data):
+    rospy.loginfo(data.data)
+
+def lait_listener():
+   
+    rospy.init_node('listner',anonymous=False)
+    rospy.Subscriber('hello',String,callback_str)
+    print(" 						im listening")
+    rospy.spin()
+    
+
+
+if __name__ == '__main__':
+    lait_listener()
